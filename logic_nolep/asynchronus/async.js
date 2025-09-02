@@ -17,11 +17,11 @@ function getUserDataPromise(userId) {
   //code
   return new Promise((resolve, reject) => {
     const user = users.find((user) => user.id == userId);
-    resolve(user);
-
-    if (err) {
-      reject(new Error("Something went wrong!"), err);
+    if (!user) {
+        reject(new Error("Wrong User!"));
     }
+    
+    resolve(user);
   });
 }
 
@@ -29,8 +29,11 @@ function getUserDataPromise(userId) {
 async function getUserDataAsync(userId) {
   //code
   try {
-    const response = await new Promise((resolve) => {
+    const response = await new Promise((resolve, reject) => {
       const user = users.find((user) => user.id == userId);
+      if(!user) {
+        reject(new Error("Wrong User!"))
+      }
 
       resolve(user);
     });
